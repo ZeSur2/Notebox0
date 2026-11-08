@@ -21,7 +21,7 @@ jobs:
           gradle-version: '8.9'
       - name: Build APK
         working-directory: NoteBox
-        run: gradle assembleDebug --no-daemon
+        run: for i in 1 2 3; do gradle assembleDebug --no-daemon -Dorg.gradle.internal.http.connectionTimeout=180000 -Dorg.gradle.internal.http.socketTimeout=180000 && exit 0; sleep 20; done; exit 1
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
